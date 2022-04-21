@@ -160,11 +160,11 @@ impl From<UsbError> for MidiError {
     }
 }
 
-// impl<E> From<nb::Error<E>> for MidiError {
-//     fn from(_: nb::Error<E>) -> Self {
-//         MidiError::PortError
-//     }
-// }
+impl<E> From<nb::Error<E>> for MidiError {
+    fn from(_: nb::Error<E>) -> Self {
+        MidiError::PortError
+    }
+}
 
 /// RTIC spawn error
 impl From<TryFromSliceError> for MidiError {
