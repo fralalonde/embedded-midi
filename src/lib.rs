@@ -36,6 +36,7 @@ mod packet;
 mod parser;
 
 #[derive(Clone, Copy, Debug)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 /// MIDI channel, stored as 0-15
 pub struct Channel(pub u8);
 

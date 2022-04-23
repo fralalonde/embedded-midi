@@ -8,6 +8,7 @@ use num_enum::UnsafeFromPrimitive;
 use core::convert::TryFrom;
 
 #[derive(Debug, Copy, Clone, UnsafeFromPrimitive)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[repr(u8)]
 pub enum Note {
     /// C1m is the C-1

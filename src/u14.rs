@@ -4,6 +4,7 @@ use crate::u7::U7;
 
 /// A primitive value that can be from 0-0x7F
 #[derive(Copy, Clone, Debug, Eq, PartialOrd, PartialEq, Ord)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct U14(pub u16);
 
 impl TryFrom<u16> for U14 {

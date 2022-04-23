@@ -5,6 +5,7 @@ use crate::{Channel, Note, Velocity, Pressure, Program, Control, U7, Bend, CodeI
 use crate::status::{SYSEX_END, is_non_status, SYSEX_START};
 
 #[derive(Clone, Copy, Debug)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[allow(unused)]
 pub enum Message {
     NoteOff(Channel, Note, Velocity),
