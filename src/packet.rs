@@ -26,6 +26,11 @@ impl Packet {
         self.bytes[0] >> 4
     }
 
+    pub fn set_cable_number(&mut self, num: CableNumber) {
+        let hinum = num << 4;
+        self.bytes[0] &= (self.bytes[0] & 0x0F) | hinum;
+    }
+
     pub fn code_index_number(&self) -> CodeIndexNumber {
         CodeIndexNumber::from(self.bytes[0] & 0x0F)
     }

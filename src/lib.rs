@@ -1,9 +1,5 @@
 #![no_std]
 
-#[cfg(feature = "rtt")]
-#[macro_use]
-extern crate rtt_target;
-
 use core::array::TryFromSliceError;
 use core::iter::FromIterator;
 use core::ops::{Deref, DerefMut};
@@ -24,6 +20,7 @@ pub use u7::U7;
 pub use parser::{PacketParser};
 pub use status::is_channel_status;
 pub use status::is_non_status;
+pub use ports::*;
 
 mod u4;
 mod u6;
@@ -34,6 +31,7 @@ mod note;
 mod message;
 mod packet;
 mod parser;
+mod ports;
 
 #[derive(Clone, Copy, Debug)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
@@ -120,14 +118,15 @@ pub trait Receive {
     fn receive(&mut self) -> Result<Option<Packet>, MidiError>;
 }
 
-/// Set callback on reception of MIDI packets
-pub trait ReceiveListener {
-    fn on_receive(&mut self, listener: Option<&'static mut (dyn FnMut(PacketList) + Send + Sync)>);
-}
+// /// Set callback on reception of MIDI packets
+// pub trait ReceiveListener {
+//     fn on_receive(&mut self, listener: Option<&'static mut (dyn FnMut(PacketList) + Send + Sync)>);
+// }
 
 /// Send a list of packets
 pub trait Transmit {
-    fn transmit(&mut self, event: PacketList) -> Result<(), MidiError>;
+    fn is_tx_full(&self) -> bool;
+    fn transmit(&mut self, packet: Packet) -> Result<(), MidiError>;
 }
 
 #[derive(Debug)]
@@ -151,6 +150,8 @@ pub enum MidiError {
     TryFromSliceError,
     PortError,
     BufferFull,
+    TooManyPorts,
+    InvalidPort,
     DroppedPacket,
 }
 

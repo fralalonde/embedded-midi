@@ -9,7 +9,6 @@ struct PacketBuffer {
     bytes: [u8; 4],
 }
 
-
 impl PacketBuffer {
     pub fn is_full(&self) -> bool {
         self.len >= self.expected_len
