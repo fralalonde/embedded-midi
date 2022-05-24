@@ -7,14 +7,14 @@ use spin::mutex::SpinMutex;
 use crate::{MidiError, Packet};
 
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
-#[derive(defmt::Format)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum PortId {
     Usb(usize),
     Serial(u8),
 }
 
 #[derive(Debug, Copy, Clone)]
-#[derive(defmt::Format)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum PortDirection {
     // Packets coming in from other devices
     In,
@@ -37,7 +37,7 @@ impl hash32::Hash for PortId {
 }
 
 #[derive(Copy, Clone)]
-#[derive(defmt::Format)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct PortInfo {
     pub port_id: PortId,
     pub direction: PortDirection,
